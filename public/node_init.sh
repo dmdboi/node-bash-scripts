@@ -1,11 +1,16 @@
 #!/bin/bash
+
 # Creates new User, configures firewall, installs Node, PM2 & Nginx
-
-echo "| Hello World |"
-
 user=$1
-database=$2
 
+# Variable Guards
+if [ -z "$1" ]
+then
+  echo "| ERROR: User not supplied"
+  exit
+fi
+
+# The Good Stuff
 sudo apt --assume-yes update 
 sudo apt --assume-yes upgrade 
 

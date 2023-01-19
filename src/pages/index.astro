@@ -1,0 +1,75 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import { SITE_TITLE, SITE_DESCRIPTION } from "../config";
+
+import ScriptCard from "../components/ScriptCard.vue";
+
+const scripts = [
+  {
+    name: "General Node.js Setup",
+    url: "curl -s https://scripts.maxdiamond.co.uk/node_init.sh | bash -s [USER]",
+    steps: [
+      "Updates & upgrades Ubuntu",
+      "Creates a new user with sudo permissions",
+      "Enables Firewall and allows OpenSSH",
+      "Install Node, PM2 and NGINX",
+    ],
+  },
+  {
+    name: "Git SSH Access",
+    url: "curl -s https://scripts.maxdiamond.co.uk/git_access.sh | bash -s [GITHUB_USERNAME] [GITHUB_ACCESS_TOKEN] [SSH_KEY_NAME]",
+    steps: ["Generates new SSH Key", "Adds the SSH key your Github Account"],
+  },
+  {
+    name: "Clone Repo & Install node modules",
+    url: "curl -s https://scripts.maxdiamond.co.uk/clone_install.sh | bash -s [GITHUB_USERNAME] [GITHUB_REPOSITORY_NAME]",
+    steps: ["Clones repo into folder", "Runs 'NPM install'"],
+  },
+  {
+    name: "Configure Nginx block",
+    url: "curl -s https://scripts.maxdiamond.co.uk/nginx_block.sh | bash -s [DOMAIN] [PORT]",
+    steps: ["Adds new server block file to Nginx", "Tests server block file and Nginx config", "Reloads Nginx"],
+  },
+  {
+    name: "LetsEncrypt SSL Certificate",
+    url: "curl -s https://scripts.maxdiamond.co.uk/letsencrypt.sh | bash -s [DOMAIN] [EMAIL]",
+    steps: [
+      "Install Certbot",
+      "Allows 'Nginx Full' firewall rule",
+      "Deletes 'Nginx HTTP' firewall rule",
+      "Runs certbot to issue SSL certificate",
+    ],
+  },
+];
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <BaseHead title="Scripts by @dmdboi" description="A collection of bash scripts to aid in deploying node projects to ubuntu servers" />
+  </head>
+  <body class="bg-[#0d0d0d] text-white">
+    <Header title={SITE_TITLE} />
+    <main class="max-w-4xl mx-auto px-6 md:px-0">
+      <p>
+        Welcome to a list of .sh scripts for deploying node applications on ubuntu servers. From initial setup, to cloning GitHub repos,
+        these scripts aim to speed up deploying projects.
+      </p>
+
+      <p class="my-4">
+        Each script is copied ready to be used in a terminal, be sure to replace all variables in <code
+          class="bg-black p-1 pt-0 rounded text-green-600">[brackets]</code
+        > with real values before you press <span class="font-medium italic">Enter</span>.
+      </p>
+
+      <p class="font-medium italic text-red-600">Use at your own risk.</p>
+
+      <div class="my-6 grid md:grid-cols-2 gap-6">
+        {scripts.map((script) => <ScriptCard client:load script={script} />)}
+      </div>
+    </main>
+    <Footer />
+  </body>
+</html>
